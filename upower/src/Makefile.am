@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = dummy freebsd linux openbsd
+SUBDIRS = dummy freebsd linux openbsd bme
 
 AM_CPPFLAGS = \
 	$(PIE_CFLAGS)						\
@@ -138,6 +138,21 @@ endif
 if UP_BUILD_TESTS
 check-local: upowerd
 	env GI_TYPELIB_PATH=$(top_builddir)/libupower-glib:$(GI_REPOSITORY_PATH) LD_LIBRARY_PATH=$(top_builddir)/libupower-glib/.libs:$(LD_LIBRARY_PATH) top_builddir=$(top_builddir) $(srcdir)/linux/integration-test -v
+endif
+
+endif
+
+if BACKEND_TYPE_BME
+upowerd_LDADD +=						\
+	bme/libupshared.la
+
+upowerd_LDFLAGS =						\
+	$(PIE_LDFLAGS)						\
+	$(RELRO_LDFLAGS)
+
+if HAVE_SYSTEMDUTILDIR
+systemsleepdir = $(systemdutildir)/system-sleep
+systemsleep_SCRIPTS = notify-upower.sh
 endif
 
 endif
