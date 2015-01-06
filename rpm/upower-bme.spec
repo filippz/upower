@@ -1,17 +1,18 @@
-Name:       upower
+Name:       upower-bme
 
 # >> macros
 # << macros
 
-Summary:    Power Management Service
+Summary:    Power Management Service - BME backend
 Version:    0.9.21
 Release:    1
 Group:      System/Libraries
 License:    GPLv2+
 URL:        http://upower.freedesktop.org/
-Source0:    http://upower.freedesktop.org/releases/upower-%{version}.tar.xz
+Source0:    %{name}-%{version}.tar.xz
 Requires:   polkit >= 0.92
 Requires:   udev
+Requires:   bme
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
 BuildRequires:  pkgconfig(gudev-1.0) >= 147
@@ -26,7 +27,7 @@ BuildRequires:  libtool
 BuildRequires:  intltool
 BuildRequires:  gettext
 BuildRequires:  systemd-devel
-Conflicts:	upower-bme
+Provides:	upower
 
 # We want pm-utils to be removed from the images, this ensure
 # that the old version gets away as it is no longer needed for
@@ -55,7 +56,8 @@ export PKG_CONFIG=pkg-config
 ./autogen.sh
 %configure --disable-static \
     --enable-man-pages=no \
-    --enable-history=no
+    --enable-history=no \
+    --with-backend=bme
 
 make %{?jobs:-j%jobs}
 
@@ -74,7 +76,6 @@ rm -rf %{buildroot}
 %doc NEWS COPYING AUTHORS HACKING README
 %{_libdir}/libupower-glib.so.*
 %config %{_sysconfdir}/dbus-1/system.d/*.conf
-/lib/udev/rules.d/*.rules
 %dir %{_localstatedir}/lib/upower
 %dir %{_sysconfdir}/UPower
 %config %{_sysconfdir}/UPower/UPower.conf

@@ -188,7 +188,7 @@ dnl - Compile time default choice of backend
 dnl ---------------------------------------------------------------------------
 AC_ARG_WITH([backend],
 	    AS_HELP_STRING([--with-backend=<option>],
-			   [Default backend to use linux, freebsd, openbsd, dummy (dummy)]))
+			   [Default backend to use linux, freebsd, openbsd, dummy (dummy), bme]))
 # default to a sane option
 AC_CANONICAL_HOST
 if test x$with_backend = x; then
@@ -222,6 +222,7 @@ AM_CONDITIONAL(BACKEND_TYPE_DUMMY, [test x$with_backend = xdummy])
 AM_CONDITIONAL(BACKEND_TYPE_LINUX, [test x$with_backend = xlinux])
 AM_CONDITIONAL(BACKEND_TYPE_FREEBSD, [test x$with_backend = xfreebsd])
 AM_CONDITIONAL(BACKEND_TYPE_OPENBSD, [test x$with_backend = xopenbsd])
+AM_CONDITIONAL(BACKEND_TYPE_BME, [test x$with_backend = xbme])
 
 dnl ---------------------------------------------------------------------------
 dnl - Build self tests
@@ -253,6 +254,7 @@ src/dummy/Makefile
 src/freebsd/Makefile
 src/openbsd/Makefile
 src/linux/Makefile
+src/bme/Makefile
 tools/Makefile
 doc/Makefile
 doc/version.xml
