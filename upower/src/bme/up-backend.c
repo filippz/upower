@@ -260,9 +260,7 @@ up_backend_update_battery_state(UpDevice* device)
 
 	if (st[bme_stat_bat_cc_full] == 0) {
 		/*
-		 * There are N9 with aftermarket batteries being detected as LI4V2 instead of LI4V35
-		 * Their capacity is being detected as 1200mAh vs 1450mAh, and max voltage of 4200mV vs 4350mV
-		 * BME reports last full capacity of 0mAh for them
+		 * Report designed capacity for uncalibrated batteries
 		 */
 		energy_full = energy_full_design;
 		capacity = 100.0f;
